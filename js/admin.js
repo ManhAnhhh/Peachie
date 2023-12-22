@@ -23,6 +23,38 @@ else {
 //     .then(data => data.products)
 //   localStorage.setItem("products", JSON.stringify(products))
 // })();
+function xulyForm() {
+  //neu chua chọn file - file.value.length = 0 - không làm gì cả
+  if (!file.value.length) {
+    alert("Bạn chưa chọn file!");
+    return;
+  };
+  //tạo một reader object để đọc file
+  let reader = new FileReader();
+  //Setup the callback event to run when the file is read
+  reader.readAsText(file.files[0]); //dọc file đầu tiên
+  reader.onload = xulyFile;
+}
+function xulyFile(e) {
+  let noidung = e.target.result;
+  let json_noidung = JSON.parse(noidung);
+  let products = [];
+  if (localStorage.getItem('products')) products = JSON.parse(localStorage.getItem('products'));
+  products = json_noidung.concat(products).reverse();
+  products = [
+    ...new Set(products.map((item) => JSON.stringify(item))),
+  ].map((item) => JSON.parse(item));
+  localStorage.setItem("products", JSON.stringify(products));
+  // console.log(json_noidung);
+  // console.log(JSON.parse(localStorage.getItem("noidung")));
+}
+document.getElementById("btnUpLoad").onclick = (e) => {
+  e.preventDefault();
+  xulyForm();
+  alert("Thêm sản phẩm thành công!");
+  location.reload();
+}
+
 function toMoney(value) {
   return value.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
 }
@@ -34,7 +66,9 @@ function deleteItem(arr, i) {
   })
   return newArr;
 }
-let products = JSON.parse(localStorage.getItem("products"));
+let products = [];
+if (localStorage.getItem("products"))
+  products = JSON.parse(localStorage.getItem("products"));
 function getProducts(products) {
   const htmls = products.map((product, i) => {
     let color, type;
@@ -255,13 +289,15 @@ const isCheckValueModify = () => {
 
 
 // export-file
-let productsCart = JSON.parse(localStorage.getItem('productsInCart'));
+let productsCart = [];
+if (localStorage.getItem('productsInCart'))
+  productsCart = JSON.parse(localStorage.getItem('productsInCart'));
 const toMoney1 = (value) => {
   // const money = value.toLocalString('it-IT', { style: 'currency', currency: 'VND' });
   return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(value);
 }
 let totalCart = 0;
-if (productsCart == null ) {
+if (productsCart == null) {
   totalCart == 0;
 }
 else {
