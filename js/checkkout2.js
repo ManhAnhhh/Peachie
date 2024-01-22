@@ -31,5 +31,5 @@ else {
 window.onload = onLoad;
 document.getElementById("btnPay").onclick = (e) => {
   e.preventDefault();
-  alert("Thanh toán thành công");
+  alert("Đặt hàng thành công");
 }

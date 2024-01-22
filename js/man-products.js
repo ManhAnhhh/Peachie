@@ -7,7 +7,7 @@ const htmls = productsMan.map(item => {
     <li>
       <div class="item col-md-4 col-sm-6 col-xs-6">
         <div class="product-block ">
-            <div class="image"> <a href="#"><img class="img-responsive" title="T-shirt" alt="T-shirt" src=${item.img}></a> </div>
+            <div class="image"> <a href="#"><img class="img-responsive" alt="T-shirt" src=${item.img}></a> </div>
             <div class="product-details">
                 <div class="product-name">
                   <h4><a href="#" style="color: rgb(202, 85, 104);">${item.name}</a></h4>
